@@ -4,11 +4,11 @@
     <h1>Engauge Level Calculations</h1>
     <form>
         <label for="xp_per_message">XP Per Message</label>
-        <input type="text" id="xp_per_message" name="xp_per_message"><br><br>
+        <input type="text" id="xp_per_message" name="xp_per_message" value="15"><br><br>
         <label for="xp_per_voice_minute">XP Per Voice Minute</label>
-        <input type="text" id="xp_per_voice_minute" name="xp_per_voice_minute"><br><br>
+        <input type="text" id="xp_per_voice_minute" name="xp_per_voice_minute" value="14"><br><br>
         <label for="target_level">Target Level</label>
-        <input type="text" id="target_level" name="target_level"><br><br>
+        <input type="text" id="target_level" name="target_level" value="10"><br><br>
         <label for="formula">Formula</label>
         <select id="formula" name="formula">
             <option value="Disgaea">Disgaea</option>
@@ -45,11 +45,12 @@
     var formula = "Disgaea"
 
     function calculateData() {
-        if (!isNaN) document.getElementById("xp_per_message").value * 1
+        if (document.getElementById("xp_per_message").value == "" || isNaN(document.getElementById("xp_per_message").value)) document.getElementById("xp_per_message").value = 15
+        if (document.getElementById("xp_per_voice_minute").value == "" || isNaN(document.getElementById("xp_per_voice_minute").value)) document.getElementById("xp_per_voice_minute").value = 4
+        if (document.getElementById("target_level").value == "" || isNaN(document.getElementById("target_level").value)) document.getElementById("target_level").value = 10
+
         xp_per_message = document.getElementById("xp_per_message").value * 1
-        if (!isNaN) document.getElementById("xp_per_voice_minute").value * 1
         xp_per_voice_minute = document.getElementById("xp_per_voice_minute").value * 1
-        if (!isNaN) document.getElementById("target_level").value * 1
         target_level = document.getElementById("target_level").value * 1
 
         let data = formulas[document.getElementById("formula").value](xp_per_message, xp_per_voice_minute, target_level);
