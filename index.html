@@ -75,6 +75,10 @@
     var target_level = 2;
     var formula = "Disgaea"
 
+    function round(num, places) {
+        return Math.round(num * Math.pow(10, places))/Math.pow(10, places)
+    }
+
     function calculateData() {
         if (document.getElementById("xp_per_message").value == "" || isNaN(document.getElementById("xp_per_message").value)) document.getElementById("xp_per_message").value = 15
         if (document.getElementById("xp_per_voice_minute").value == "" || isNaN(document.getElementById("xp_per_voice_minute").value)) document.getElementById("xp_per_voice_minute").value = 4
@@ -91,14 +95,14 @@
         let min_time = data.min_time
         let avg_time = data.avg_time
 
-        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `${voice_minutes / 60} Hours(s)`
-        else document.getElementById("VoiceMinutes").innerHTML = `${voice_minutes} Minute(s)`
+        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `${round(voice_minutes / 60, 2)} Hours(s)`
+        else document.getElementById("VoiceMinutes").innerHTML = `${round(voice_minutes, 2)} Minute(s)`
 
-        if (min_time > 120) document.getElementById("MinTime").innerHTML = `${min_time / 60} Hours(s)`
-        else document.getElementById("MinTime").innerHTML = `${min_time} Minute(s)`
+        if (min_time > 120) document.getElementById("MinTime").innerHTML = `${round(min_time / 60, 2)} Hours(s)`
+        else document.getElementById("MinTime").innerHTML = `${round(min_time, 2)} Minute(s)`
 
-        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `${avg_time / 60} Hours(s)`
-        else document.getElementById("AvgTime").innerHTML = `${avg_time} Minute(s)`
+        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `${round(avg_time / 60, 2)} Hours(s)`
+        else document.getElementById("AvgTime").innerHTML = `${round(avg_time, 2, 2)} Minute(s)`
     }
 
     function disgaea(xp_per_message, xp_per_voice_minute, level) {
