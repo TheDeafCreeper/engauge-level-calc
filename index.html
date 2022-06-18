@@ -2,30 +2,60 @@
 
 <body>
     <h1>Engauge Level Calculations</h1>
-    <form>
-        <label for="xp_per_message">XP Per Message</label>
-        <input type="text" id="xp_per_message" name="xp_per_message" value="15"><br><br>
-        <label for="xp_per_voice_minute">XP Per Voice Minute</label>
-        <input type="text" id="xp_per_voice_minute" name="xp_per_voice_minute" value="4"><br><br>
-        <label for="target_level">Target Level</label>
-        <input type="text" id="target_level" name="target_level" value="10"><br><br>
-        <label for="formula">Formula</label>
-        <select id="formula" name="formula">
-            <option value="Disgaea">Disgaea</option>
-            <option value="Fibonacci">Fibonacci</option>
-            <option value="Linear">Linear</option>
-            <option value="Mee6">Mee6</option>
-            <option value="Atlas">Atlas</option>
-            <option value="Arcane">Arcane</option>
-        </select>
-    </form>
+    <div class="inputs">
+        <div class="inputField">
+            <h3 for="xp_per_message">XP Per Message</h3>
+            <input type="text" id="xp_per_message" name="xp_per_message" value="15">
+        </div>
 
-    <h2 id="MessageCount">Message Count: N/A Messages</h2>
-    <h2 id="VoiceMinutes">Voice Minutes: N/A Minutes</h2>
-    <h2 id="MinTime">Minimum Time to Reach Level: N/A Minutes</h2>
-    <h2 id="AvgTime">More Reasonable Time to Reach Level: N/A Minutes</h2>
-    <button onclick="calculateData()">Calculate</button> <br> <br>
-    <a href="https://github.com/TheDeafCreeper/engauge-level-calc">Source Code</a>
+        <div class="inputField">
+            <h3>XP Per Voice Minute</h3>
+            <input type="text" id="xp_per_voice_minute" name="xp_per_voice_minute" value="4">
+        </div>
+
+        <div class="inputField">
+            <h3>Target Level</h3>
+            <input type="text" id="target_level" name="target_level" value="10"><br><br>
+        </div>
+
+        <div class="inputField">
+            <h3>Formula</h3>
+            <select id="formula" name="formula">
+                <option value="Disgaea">Disgaea</option>
+                <option value="Fibonacci">Fibonacci</option>
+                <option value="Linear">Linear</option>
+                <option value="Mee6">Mee6</option>
+                <option value="Atlas">Atlas</option>
+                <option value="Arcane">Arcane</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="result">
+        <h2 class="resultTitle">Message Count (No VC): </h2>
+        <h2 id="MessageCount">N/A</h2>
+    </div>
+
+    <div class="result">
+        <h2 class="resultTitle">Voice Time (No Messages): </h2>
+        <h2 id="VoiceMinutes">N/A</h2>
+    </div>
+
+    <div class="result">
+        <h2 class="resultTitle">Minimum Time to Reach Level: </h2>
+        <h2 id="MinTime">N/A</h2>
+    </div>
+
+    <div class="result">
+        <h2 class="resultTitle">More Reasonable Time to Reach Level: </h2>
+        <h2 id="AvgTime">N/A</h2>
+    </div>
+
+    <div class="buttons">
+        <button onclick="calculateData()">Calculate</button> <br> <br>
+        <a href="https://github.com/TheDeafCreeper/engauge-level-calc">Source Code</a>
+    </div>
 </body>
 
 <script>
@@ -55,20 +85,20 @@
         target_level = document.getElementById("target_level").value * 1
 
         let data = formulas[document.getElementById("formula").value](xp_per_message, xp_per_voice_minute, target_level);
-        document.getElementById("MessageCount").innerHTML = `Message Count: ${data.message_count} Message(s)`
+        document.getElementById("MessageCount").innerHTML = `${data.message_count}`
 
         let voice_minutes = data.vc_duration
         let min_time = data.min_time
         let avg_time = data.avg_time
 
-        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${voice_minutes / 60} Hours(s)`
-        else document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${voice_minutes} Minute(s)`
+        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `${voice_minutes / 60} Hours(s)`
+        else document.getElementById("VoiceMinutes").innerHTML = `${voice_minutes} Minute(s)`
 
-        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${min_time / 60} Hours(s)`
-        else document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${min_time} Minute(s)`
+        if (min_time > 120) document.getElementById("MinTime").innerHTML = `${min_time / 60} Hours(s)`
+        else document.getElementById("MinTime").innerHTML = `${min_time} Minute(s)`
 
-        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${avg_time / 60} Hours(s)`
-        else document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${avg_time} Minute(s)`
+        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `${avg_time / 60} Hours(s)`
+        else document.getElementById("AvgTime").innerHTML = `${avg_time} Minute(s)`
     }
 
     function disgaea(xp_per_message, xp_per_voice_minute, level) {
@@ -206,3 +236,139 @@
 </script>
 
 </html>
+
+<style>
+    body {
+        background-color: rgb(19, 21, 21);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .result {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .resultTitle {
+        text-align: right;
+    }
+
+    .inputs {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .inputField {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 25%;
+        padding: 0 20px;
+    }
+
+    input {
+        font-family: "Roboto", "Arial", sans-serif;
+        background: transparent;
+        border: 1px solid #2D3333;
+        border-radius: 5px;
+        color: #aaa;
+        font-size: 14px;
+        padding: 4px 8px;
+        outline: none;
+        text-align: center;
+    }
+
+    .buttons {
+        width: 150px;
+    }
+
+    button {
+        width: 100%;
+        height: 50px;
+        background: linear-gradient(to right, #0af, #0094de);
+        font-size: 24px;
+        font-weight: 700;
+        border-radius: 4px;
+        transition: 0.2s ease;
+        text-rendering: auto;
+        letter-spacing: normal;
+        word-spacing: normal;
+        line-height: normal;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: center;
+        align-items: flex-start;
+        cursor: default;
+        box-sizing: border-box;
+        margin: 0em;
+        margin-top: 20px;
+        border-width: 0px;
+        color: white;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 3px 12px 4px rgb(0 0 0 / 50%);
+        color: #eee;
+    }
+
+    select {
+        font-family: "Roboto", "Arial", sans-serif;
+        background: transparent;
+        border: 1px solid #2D3333;
+        border-radius: 5px;
+        color: #aaa;
+        font-size: 14px;
+        padding: 4px 8px;
+        outline: none;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 3em;
+        color: #fffafb;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: bold;
+    }
+
+    h2 {
+        width: 500px;
+        padding: 0px 5px;
+        font-size: 1.4em;
+        color: #fffafb;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: bold;
+        margin: 5px 0px;
+    }
+
+    h3 {
+        font-size: 1em;
+        color: #fffafb;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    a {
+        padding: 3px 37.21px;
+        background: linear-gradient(to right, rgb(94, 94, 94), #525252);
+        font-size: 14px;
+        font-weight: 700;
+        border-radius: 4px;
+        text-rendering: auto;
+        letter-spacing: normal;
+        word-spacing: normal;
+        line-height: normal;
+        text-indent: 0px;
+        text-shadow: none;
+        text-decoration: none;
+        color: white;
+    }
+</style>
