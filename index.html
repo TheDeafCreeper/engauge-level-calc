@@ -1,44 +1,196 @@
 <html>
-    <body>
-        <h1>Hello, World!</h1>
-        <h2 id="MessageCount">Message Count: N/A Messages</h2>
-        <h2 id="VoiceMinutes">Voice Minutes: N/A Minutes</h2>
-        <h2 id="MinTime">Minimum Time: N/A Minutes</h2>
-        <button onclick="calculateData()">Calculate</button>
-    </body>
-    
-    <script>
-        const formulas = {
-            "Disgaea": disgaea
+
+<body>
+    <h1>Hello, World!</h1>
+    <form>
+        <label for="xp_per_message">XP Per Message</label>
+        <input type="text" id="xp_per_message" name="xp_per_message"><br><br>
+        <label for="xp_per_voice_minute">XP Per Voice Minute</label>
+        <input type="text" id="xp_per_voice_minute" name="xp_per_voice_minute"><br><br>
+        <label for="target_level">Target Level</label>
+        <input type="text" id="target_level" name="target_level"><br><br>
+        <label for="formula">Formula</label>
+        <select id="formula" name="formula">
+            <option value="Disgaea">Disgaea</option>
+            <option value="Fibonacci">Fibonacci</option>
+            <option value="Linear">Linear</option>
+            <option value="Mee6">Mee6</option>
+            <option value="Atlas">Atlas</option>
+            <option value="Arcane">Arcane</option>
+        </select>
+    </form>
+
+    <h2 id="MessageCount">Message Count: N/A Messages</h2>
+    <h2 id="VoiceMinutes">Voice Minutes: N/A Minutes</h2>
+    <h2 id="MinTime">Minimum Time to reach level: N/A Minutes</h2>
+    <h2 id="AvgTime">Average Time to reach level: N/A Minutes</h2>
+    <button onclick="calculateData()">Calculate</button>
+</body>
+
+<script>
+    const formulas = {
+        "Disgaea": disgaea,
+        "Fibonacci": fibonacci,
+        "Linear": linear,
+        "Mee6": mee6,
+        "Atlas": atlas,
+        "Arcane": arcane
+    }
+
+    const fibCache = {}
+
+    var xp_per_message = 15;
+    var xp_per_voice_minute = 4;
+    var target_level = 2;
+    var formula = "Disgaea"
+
+    function calculateData() {
+        if (!isNaN) document.getElementById("xp_per_message").value * 1
+        xp_per_message = document.getElementById("xp_per_message").value * 1
+        if (!isNaN) document.getElementById("xp_per_voice_minute").value * 1
+        xp_per_voice_minute = document.getElementById("xp_per_voice_minute").value * 1
+        if (!isNaN) document.getElementById("target_level").value * 1
+        target_level = document.getElementById("target_level").value * 1
+
+        let data = formulas[document.getElementById("formula").value](xp_per_message, xp_per_voice_minute, target_level);
+        document.getElementById("MessageCount").innerHTML = `Message Count: ${data.message_count} Message(s)`
+        document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.vc_duration} Minute(s)`
+        document.getElementById("MinTime").innerHTML = `Minimum Time to reach level: ${data.min_time} Minute(s)`
+        document.getElementById("AvgTime").innerHTML = `Average Time to reach level: ${data.avg_time} Minute(s)`
+    }
+
+    function disgaea(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0,
+            avg_time: 0
         }
 
-        var xp_per_message = 15;
-        var xp_per_voice_minute = 4;
-        var target_level = 10;
-        var formula = "Disgaea"
-
-        function calculateData() {
-            let data = formulas[formula](xp_per_message, xp_per_voice_minute, target_level);
-            document.getElementById("MessageCount").innerHTML = `Message Count: ${data.message_count} Message(s)`
-            document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.message_count} Minute(s)`
-            document.getElementById("MinTime").innerHTML = `Min Time: ${data.message_count} Minute(s)`
+        let total_XP = 0;
+        for (let i = 1; i < level; i++) {
+            total_XP += (100 + (0.04 * Math.pow(i - 1, 3)) + (0.8 * Math.pow(i - 1, 2)) + (2 * (level - 1)) + 0.5);
         }
 
-        function disgaea(xp_per_message, xp_per_voice_minute,level) {
-            let returned_data = {
-                message_count: 0,
-                vc_duration: 0,
-                min_time: 0
-            }
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
 
-            let total_XP = 0;
+    function fibonacci(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0
+        }
+
+        let total_XP = 0;
+        if (level > 1) {
             for (let i = 1; i < level; i++) {
-                total_XP += (100 + (0.04 * Math.pow(i - 1, 3)) + (0.8 * Math.pow(i - 1, 2)) + (2 * (level - 1)) + 0.5);
+                total_XP += 100 + fib(i);
+                if (total_XP == Infinity) break;
             }
+        } else total_XP = 100;
 
-            returned_data.message_count = Math.ceil(total_XP / xp_per_message);
-            returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
-            returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
+
+    function fib(n) {
+        var a = 0, b = 1, c;
+        if (n < 3) {
+            if (n < 0) return fib(-n);
+            if (n === 0) return 0;
+            return 1;
         }
-    </script>
+        while (--n)
+            c = a + b, a = b, b = c;
+        return c;
+    }
+
+    function linear(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0
+        }
+
+        let total_XP = 0;
+        for (let i = 1; i < level; i++) {
+            total_XP += (100 + (20 * (level - 1)));
+        }
+
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
+
+    function mee6(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0
+        }
+
+        let total_XP = 0;
+        for (let i = 1; i < level; i++) {
+            total_XP += 5 + Math.pow(i - 1, 2) + (50 * (level - 1)) + 100;
+        }
+
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
+
+    function atlas(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0
+        }
+
+        let total_XP = 0;
+        if (level == 1) total_XP == 55
+        else {
+            for (let i = 1; i < level; i++) {
+                total_XP += (((5 * Math.pow(i, 2) + 50)) * i) - ((5 * Math.pow(i - 1, 2) + 50) * (i - 1));
+            }
+        }
+
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
+
+    function arcane(xp_per_message, xp_per_voice_minute, level) {
+        let returned_data = {
+            message_count: 0,
+            vc_duration: 0,
+            min_time: 0
+        }
+
+        let total_XP = 0;
+        for (let i = 1; i < level; i++) {
+            total_XP += ((100 * (level - 1)) + 75);
+        }
+
+        returned_data.message_count = Math.ceil(total_XP / xp_per_message);
+        returned_data.vc_duration = Math.ceil(total_XP / xp_per_voice_minute);
+        returned_data.min_time = Math.ceil(total_XP / (xp_per_message + xp_per_voice_minute));
+        returned_data.avg_time = Math.round(returned_data.min_time * 1.45 + (returned_data.message_count * .05));
+        return returned_data;
+    }
+</script>
+
 </html>
