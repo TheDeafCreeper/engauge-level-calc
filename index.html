@@ -22,8 +22,8 @@
 
     <h2 id="MessageCount">Message Count: N/A Messages</h2>
     <h2 id="VoiceMinutes">Voice Minutes: N/A Minutes</h2>
-    <h2 id="MinTime">Minimum Time to reach level: N/A Minutes</h2>
-    <h2 id="AvgTime">More reasonable time to reach level: N/A Minutes</h2>
+    <h2 id="MinTime">Minimum Time to Reach Level: N/A Minutes</h2>
+    <h2 id="AvgTime">More Reasonable Time to Reach Level: N/A Minutes</h2>
     <button onclick="calculateData()">Calculate</button> <br> <br>
     <a href="https://github.com/TheDeafCreeper/engauge-level-calc">Source Code</a>
 </body>
@@ -61,14 +61,14 @@
         let min_time = data.min_time
         let avg_time = data.avg_time
 
-        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes / 60} Hours(s)`
-        else document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes} Minute(s)`
+        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${voice_minutes / 60} Hours(s)`
+        else document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${voice_minutes} Minute(s)`
 
-        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time / 60} Hours(s)`
-        else document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time} Minute(s)`
+        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${min_time / 60} Hours(s)`
+        else document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${min_time} Minute(s)`
 
-        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time / 60} Hours(s)`
-        else document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time} Minute(s)`
+        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${avg_time / 60} Hours(s)`
+        else document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${avg_time} Minute(s)`
     }
 
     function disgaea(xp_per_message, xp_per_voice_minute, level) {
