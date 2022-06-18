@@ -64,10 +64,10 @@
         if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes / 60} Hours(s)`
         else document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes} Minute(s)`
 
-        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Voice Minutes: ${data.min_time / 60} Hours(s)`
+        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time / 60} Hours(s)`
         else document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time} Minute(s)`
 
-        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `Voice Minutes: ${data.avg_time / 60} Hours(s)`
+        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time / 60} Hours(s)`
         else document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time} Minute(s)`
     }
 
