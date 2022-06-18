@@ -56,9 +56,19 @@
 
         let data = formulas[document.getElementById("formula").value](xp_per_message, xp_per_voice_minute, target_level);
         document.getElementById("MessageCount").innerHTML = `Message Count: ${data.message_count} Message(s)`
-        document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.vc_duration} Minute(s)`
-        document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time} Minute(s)`
-        document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time} Minute(s)`
+
+        let voice_minutes = data.vc_duration
+        let min_time = data.min_time
+        let avg_time = data.avg_time
+
+        if (voice_minutes > 120) document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes / 60} Hours(s)`
+        else document.getElementById("VoiceMinutes").innerHTML = `Voice Minutes: ${data.voice_minutes} Minute(s)`
+
+        if (min_time > 120) document.getElementById("MinTime").innerHTML = `Voice Minutes: ${data.min_time / 60} Hours(s)`
+        else document.getElementById("MinTime").innerHTML = `Minimum Time to Reach Level: ${data.min_time} Minute(s)`
+
+        if (avg_time > 120) document.getElementById("AvgTime").innerHTML = `Voice Minutes: ${data.avg_time / 60} Hours(s)`
+        else document.getElementById("AvgTime").innerHTML = `More Reasonable Time to Reach Level: ${data.avg_time} Minute(s)`
     }
 
     function disgaea(xp_per_message, xp_per_voice_minute, level) {
